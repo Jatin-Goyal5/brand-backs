@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.demo.brandbacks.constants.Constants;
 import com.demo.brandbacks.dto.GenericResponseBuilder;
 import com.demo.brandbacks.dto.ProductDto;
+import com.demo.brandbacks.exception.UnauthorizedException;
 import com.demo.brandbacks.model.Product;
 import com.demo.brandbacks.security.JwtUtil;
 import com.demo.brandbacks.security.UserPrincipal;
@@ -41,7 +42,7 @@ public class ProductController {
 	@GetMapping("/get")
 	public ResponseEntity<?> getProducts(
 			@RequestHeader(value = "Authorization", required = true) String authorizationHeader
-			) {
+			) throws UnauthorizedException{
 		try {
 			String jwt = authorizationHeader.substring(7);
 

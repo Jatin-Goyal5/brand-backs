@@ -27,7 +27,7 @@ public class SecurityConfig  {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		 http.cors().and().csrf().disable()
-	        .authorizeHttpRequests().requestMatchers("/auth/**").permitAll()
+	        .authorizeHttpRequests().requestMatchers("/auth/**","/api/orders/**").permitAll()
 	        .anyRequest().authenticated()
 	        .and()
 	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

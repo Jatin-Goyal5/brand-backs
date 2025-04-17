@@ -11,6 +11,7 @@ import com.demo.brandbacks.dto.BeneficiaryDetailsDTO;
 import com.demo.brandbacks.dto.DecentroTransferRequest;
 import com.demo.brandbacks.dto.DecentroUpiVerificationRequest;
 import com.demo.brandbacks.dto.UpiRequest;
+import com.demo.brandbacks.dto.VirtualAccountDto;
 import com.demo.brandbacks.util.HttpRequestUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -100,6 +101,11 @@ public class PaymentService {
 		decentroTransferRequest.setTransferType("UPI");
 		decentroTransferRequest.setBeneficiaryDetails(beneficiaryDetailsDTO);
 		return decentroTransferRequest;
+		
+	}
+
+	public void createVirtualAccount(VirtualAccountDto virtualAccountDto) {
+		// TODO Auto-generated method stub
 		
 	}
 

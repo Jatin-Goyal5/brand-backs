@@ -9,6 +9,12 @@ public interface  Constants {
 		ERROR
 	}
 	
+	public static enum OrderStatus{
+		Pending,
+		Completed,
+		Failed
+	}
+	
 	public static final class QRCODE{
 		public static  enum Status{
 			 UNCLAIMED,

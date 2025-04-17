@@ -16,12 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.brandbacks.dto.BrandRequestDto;
 import com.demo.brandbacks.dto.GenericResponseBuilder;
+import com.demo.brandbacks.dto.JwtResponse;
 import com.demo.brandbacks.dto.LoginRequestDto;
 import com.demo.brandbacks.dto.VerifyOtpDto;
 import com.demo.brandbacks.repository.UserRepository;
 import com.demo.brandbacks.security.JwtUtil;
+import com.demo.brandbacks.security.UserPrincipal;
 import com.demo.brandbacks.service.CustomDetailService;
 import com.demo.brandbacks.service.OtplessService;
+import com.demo.brandbacks.service.UserPrincipalService;
 import com.demo.brandbacks.service.UserService;
 import com.demo.brandbacks.util.MessageUtil;
 
@@ -54,6 +57,9 @@ public class AuthController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+	@Autowired
+	UserPrincipalService userPrincipalService;
 
 //    @PostMapping("/login")
 //    public ResponseEntity<GenericResponseBuilder> login(@RequestBody LoginRequestDto authRequest, HttpServletResponse response ) throws Exception {
@@ -151,8 +157,16 @@ public class AuthController {
 	        );
 
 	        String jwt = jwtUtil.generateToken(loginRequest.getEmail());
+			UserPrincipal userDetails =(UserPrincipal) userPrincipalService.fetchUserPrincipal(jwt);
 
-	        return new ResponseEntity<>(GenericResponseBuilder.builder().message(MessageUtil.getMessage("app.auth.success.auth")).data(jwt).build(), HttpStatus.OK);
+	        JwtResponse jwtResponse = new JwtResponse();
+	        jwtResponse.setAccessToken(jwt);
+	        jwtResponse.setEmail(userDetails.getEmail());
+	        jwtResponse.setFirstName(userDetails.getFirstName());
+	        jwtResponse.setLastName(userDetails.getLastName());
+	        jwtResponse.setId(userDetails.getId());
+	        
+	        return new ResponseEntity<>(GenericResponseBuilder.builder().message(MessageUtil.getMessage("app.auth.success.auth")).data(jwtResponse).build(), HttpStatus.OK);
 
 	    } catch (Exception e) {
 	    	e.printStackTrace();

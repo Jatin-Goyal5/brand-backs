@@ -7,6 +7,6 @@ public class OrderRequest {
 
     private String address;
     private String productId;
-    private int quantity;
+    private Long quantity;
     private double cashbackAmount;
 }

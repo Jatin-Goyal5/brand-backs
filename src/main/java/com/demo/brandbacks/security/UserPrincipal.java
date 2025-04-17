@@ -29,21 +29,27 @@ public class UserPrincipal implements UserDetails {
 
 	private Collection<? extends GrantedAuthority> authorities;
 	
+	String lastName;
+	
+	String firstName;
 	
 	public UserPrincipal() {
 	}
-	public UserPrincipal(Collection<? extends GrantedAuthority> authorities, String username, String password, String id) {
+	public UserPrincipal(Collection<? extends GrantedAuthority> authorities, String username, String password, String id, String firstName, String lastName, String email) {
 		this.authorities = authorities;
 		this.username = username;
 		this.password = password;
 		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
 	}
 	
 	public static UserPrincipal create(String username, User user) {
 		 List<GrantedAuthority> authorities = user.getRoles().stream()
 	                .map(role -> new SimpleGrantedAuthority(role.getName()))
 	                .collect(Collectors.toList());
-		return new UserPrincipal(authorities, username, user.getPassword(), user.getId());
+		return new UserPrincipal(authorities, username, user.getPassword(), user.getId(), user.getFirstName(), user.getLastName(), user.getEmail());
 	}
 	
 	@Override
